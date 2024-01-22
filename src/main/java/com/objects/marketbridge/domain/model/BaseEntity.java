@@ -13,6 +13,7 @@ import java.util.Date;
 @MappedSuperclass
 @Getter
 public abstract class BaseEntity {
+
     @CreatedDate
     private LocalDateTime createdAt;
 

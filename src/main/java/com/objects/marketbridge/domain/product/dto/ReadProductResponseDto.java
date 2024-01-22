@@ -8,8 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
-@Getter @Setter
-public class ProductResponseDto {
+@Getter
+@Setter
+public class ReadProductResponseDto {
 
     private Long productId;
 
@@ -21,21 +22,22 @@ public class ProductResponseDto {
     private Long stock;
     private String thumbImg;
 
-    private List<String> itemImgUrls = new ArrayList<>();
-    private List<String> detailImgUrls = new ArrayList<>();
+//    private List<String> itemImgUrls = new ArrayList<>();
+//    private List<String> detailImgUrls = new ArrayList<>();
 
     private Long discountRate;
     private List<String> optionNames = new ArrayList<>();
 
 
-    public ProductResponseDto(Long productId) {
-        this.productId = productId;
-    }
+//    public ReadProductResponseDto(Long productId) {
+//        this.productId = productId;
+//    }
 
-    public ProductResponseDto
-            (Long categoryId, Boolean isOwn, String name, Long price,
+    public ReadProductResponseDto
+            (Long productId, Long categoryId, Boolean isOwn, String name, Long price,
              Boolean isSubs, Long stock, String thumbImg,
              Long discountRate) {
+        this.productId = productId;
         this.categoryId = categoryId;
         this.isOwn = isOwn;
         this.name = name;
@@ -45,5 +47,4 @@ public class ProductResponseDto {
         this.thumbImg = thumbImg;
         this.discountRate = discountRate;
     }
-
 }

@@ -1,19 +1,19 @@
 package com.objects.marketbridge.domain.product.repository;
 
 import com.objects.marketbridge.domain.model.Product;
-import com.objects.marketbridge.domain.product.dto.ProductRequestDto;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Repository
 public class ProductRepositoryImpl implements ProductRepository {
 
     private final ProductJpaRepository productJpaRepository;
+    private final EntityManager em;
 
     @Override
     public List<Product> findAll() {
@@ -36,11 +36,6 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public void deleteAllInBatch() {
-        productJpaRepository.deleteAllInBatch();
-    }
-
-    @Override
     public void save(Product product) {
         productJpaRepository.save(product);
     }
@@ -48,5 +43,20 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public void saveAll(List<Product> products) {
         productJpaRepository.saveAll(products);
+    }
+
+    @Override
+    public void delete(Product product) {
+        productJpaRepository.delete(product);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        productJpaRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteAllInBatch() {
+        productJpaRepository.deleteAllInBatch();
     }
 }

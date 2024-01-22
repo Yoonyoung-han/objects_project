@@ -10,11 +10,16 @@ public interface ProductRepository {
 
     List<Product> findByName(String name);
 
-    void deleteAllInBatch();
     void save(Product product);
 
     List<Product> findAll();
 
     void saveAll(List<Product> products);
+
+    void delete(Product product);
+
+    void deleteById(Long id);
+
+    void deleteAllInBatch();
 
 }
