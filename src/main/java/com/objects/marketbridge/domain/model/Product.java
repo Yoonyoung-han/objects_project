@@ -56,9 +56,9 @@ public class Product extends BaseEntity{
         this.name = name;
         this.price = price;
         this.isSubs = isSubs;
+        this.stock = stock;
         this.thumbImg = thumbImg;
         this.discountRate = discountRate;
-        this.stock = stock;
     }
 
     public void addProdOrderDetail(ProdOrderDetail prodOrderDetail) {
@@ -68,5 +68,16 @@ public class Product extends BaseEntity{
 
     public void increase(Long quantity) {
         stock += quantity;
+    }
+
+    public void updateProduct(Category category, Boolean isOwn, String name, Long price, Boolean isSubs, Long stock, String thumbImg, Long discountRate) {
+        this.category = category;
+        this.isOwn = isOwn; // 로켓 true , 오픈 마켓 false
+        this.name = name;
+        this.price = price;
+        this.isSubs = isSubs;
+        this.stock = stock;
+        this.thumbImg = thumbImg;
+        this.discountRate = discountRate;
     }
 }

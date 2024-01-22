@@ -1,12 +1,9 @@
 package com.objects.marketbridge.domain.product.controller;
 
-import com.objects.marketbridge.domain.model.Product;
-import com.objects.marketbridge.domain.product.dto.ProductRequestDto;
-import com.objects.marketbridge.domain.product.dto.ProductResponseDto;
-import com.objects.marketbridge.domain.product.repository.ProductRepository;
+import com.objects.marketbridge.domain.product.dto.*;
 import com.objects.marketbridge.domain.product.service.ProductService;
 import com.objects.marketbridge.global.common.ApiResponse;
-import com.objects.marketbridge.global.security.annotation.UserAuthorize;
+import com.objects.marketbridge.global.security.mock.UserAuthorize;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -16,27 +13,27 @@ import org.springframework.web.bind.annotation.*;
 public class ProductController {
 
     private final ProductService productService;
-    private final ProductRepository productRepository;
 
 
     //상품등록
     @UserAuthorize
     @PostMapping("/products")
-    public ApiResponse<ProductResponseDto> registerProduct(@Valid @RequestBody ProductRequestDto productRequestDto) {
-        Long productId = productService.registerProduct(productRequestDto);
-        ProductResponseDto productResponseDto = new ProductResponseDto(productId);
-        return ApiResponse.ok(productResponseDto);
+    public ApiResponse<CreateProductResponseDto> createProduct
+    (@Valid @RequestBody CreateProductRequestDto createProductRequestDto) {
+        Long productId = productService.createProduct(createProductRequestDto);
+        CreateProductResponseDto createProductResponseDto = new CreateProductResponseDto(productId);
+        return ApiResponse.ok(createProductResponseDto);
     }
 
 
 
     //상품조회
-    @GetMapping("/products")
-    public ProductResponseDto getProductList(@Valid @RequestBody ProductRequestDto request){
-
-        // 담을거 가져오기
-        // 현재 임시로 기본생성자 사용.
-        return new ProductResponseDto();
+    @UserAuthorize
+    @GetMapping("/products/{id}")
+    public ApiResponse<ReadProductResponseDto> readProduct
+    (@PathVariable("id") Long id){
+        ReadProductResponseDto readProductResponseDto = productService.readProduct(id);
+        return ApiResponse.ok(readProductResponseDto);
     }
 
 
@@ -44,33 +41,24 @@ public class ProductController {
 //    //상품수정
 //    @UserAuthorize
 //    @PatchMapping("/products/{id}")
-//    public ApiResponse<ProductResponseDto> UpdateProduct
-//        (@PathVariable Long id, @RequestBody ProductRequestDto productRequestDto) {
-//
-//        ProductResponseDto productResponseDto = new ProductResponseDto(
-//                productRequestDto.getCategoryId(),
-//                productRequestDto.getIsOwn(),
-//                productRequestDto.getName(),
-//                productRequestDto.getPrice(),
-//                productRequestDto.getIsSubs(),
-//                productRequestDto.getStock(),
-//                productRequestDto.getThumbImg(),
-//                productRequestDto.getItemImgUrls(),
-//                productRequestDto.getDetailImgUrls(),
-//                productRequestDto.getDiscountRate(),
-//                productRequestDto.getOptionNames());
-//
-//        productService.updateProduct(id, productRequestDto);
-//        return ApiResponse.ok(productResponseDto);
+//    public ApiResponse<UpdateProductResponseDto> updateProduct
+//    (@PathVariable("id") Long id, @RequestBody @Valid UpdateProductRequestDto updateProductRequestDto) {
+//        productService.updateProduct(id, updateProductRequestDto);
+//        UpdateProductResponseDto updateProductResponseDto = new UpdateProductResponseDto(id);
+//        return ApiResponse.ok(updateProductResponseDto);
 //    }
 
 
 
-
-
-
-
-    //상품삭제
+//    //상품삭제
+//    @UserAuthorize
+//    @DeleteMapping("/products/{id}")
+//    public ApiResponse<ProductResponseDto> deleteProduct
+//    (@PathVariable("id") Long id) {
+//        productService.deleteProduct(id);
+//        ProductResponseDto productResponseDto = new ProductResponseDto();
+//        return ApiResponse.ok(productResponseDto);
+//    }
 
 
 

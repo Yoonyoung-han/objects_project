@@ -9,11 +9,11 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
-public class ProductRequestDto {
-
-//    private Long productId;
+public class CreateProductRequestDto {
+    //    private Long productId;
 
     @NotNull
     private Long categoryId;
@@ -43,7 +43,7 @@ public class ProductRequestDto {
 
 
     @Builder
-    public ProductRequestDto(Long categoryId, Boolean isOwn, String name, Long price, Boolean isSubs, Long stock, String thumbImg, List<String> itemImgUrls, List<String> detailImgUrls, Long discountRate, List<String> optionNames) {
+    public CreateProductRequestDto(Long categoryId, Boolean isOwn, String name, Long price, Boolean isSubs, Long stock, String thumbImg, List<String> itemImgUrls, List<String> detailImgUrls, Long discountRate, List<String> optionNames) {
         this.categoryId = categoryId;
         this.isOwn = isOwn;
         this.name = name;
