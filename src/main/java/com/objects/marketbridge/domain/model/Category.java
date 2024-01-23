@@ -15,17 +15,17 @@ public class Category extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
     private Long id;
-    // TODO
-    private Long prevId;
-    // TODO
-    private Long nextId;
+
+    private Long parentId;
+
+    private Long level; //대분류 0L, 중분류 1L, 소분류 2L.
 
     private String name;
 
     @Builder
-    private Category(Long prevId, Long nextId, String name) {
-        this.prevId = prevId;
-        this.nextId = nextId;
+    public Category(Long parentId, Long level, String name) {
+        this.parentId = parentId;
+        this.level = level;
         this.name = name;
     }
 }

@@ -1,12 +1,12 @@
 package com.objects.marketbridge.domain.product.service;
 
+import com.objects.marketbridge.domain.category.repository.CategoryRepository;
 import com.objects.marketbridge.domain.model.*;
 import com.objects.marketbridge.domain.product.dto.*;
 
 import com.objects.marketbridge.domain.Image.ImageRepository;
 import com.objects.marketbridge.domain.Image.ProductImageRepository;
 import com.objects.marketbridge.domain.product.repository.ProductRepository;
-import com.objects.marketbridge.domain.category.CategoryRepository;
 import com.objects.marketbridge.domain.option.OptionRepository;
 import com.objects.marketbridge.domain.option.ProdOptionRepository;
 import jakarta.persistence.EntityNotFoundException;
