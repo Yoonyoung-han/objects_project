@@ -64,5 +64,14 @@ public class CategoryRepositoryImpl implements CategoryRepository{
         return categories;
     }
 
+    @Override
+    public List<Category> findAllByLevelAndParentIdIsNull(Long level) {
+        return categoryJpaRepository.findAllByLevelAndParentIdIsNull(level);
+    }
+
+    @Override
+    public List<Category> findAllByLevelAndParentId(Long level, Long parentId) {
+        return categoryJpaRepository.findAllByLevelAndParentId(level, parentId);
+    }
 
 }

@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -22,10 +24,21 @@ public class Category extends BaseEntity{
 
     private String name;
 
+    @OneToMany(mappedBy = "parentId")
+    private List<Category> childCategories;
+
     @Builder
     public Category(Long parentId, Long level, String name) {
         this.parentId = parentId;
         this.level = level;
         this.name = name;
+    }
+
+    @Builder
+    public Category(Long parentId, Long level, String name, List<Category> childCategories) {
+        this.parentId = parentId;
+        this.level = level;
+        this.name = name;
+        this.childCategories = childCategories;
     }
 }
