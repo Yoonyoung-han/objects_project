@@ -29,8 +29,8 @@ VALUES
 -- Insert statements for category table
 INSERT INTO marketbridge.category (parent_id, level, name, created_at, updated_at, deleted_at)
 VALUES
-    (NULL, NULL, 'Electronics', NOW(), NOW(), NULL),
-    (NULL, NULL, 'Clothing', NOW(), NOW(), NULL);
+    (NULL, 0, 'Electronics', NOW(), NOW(), NULL),
+    (NULL, 0, 'Clothing', NOW(), NOW(), NULL);
 
 -- Insert statements for reward_policy table
 INSERT INTO marketbridge.reward_policy (type, rate, created_at, updated_at, deleted_at)
