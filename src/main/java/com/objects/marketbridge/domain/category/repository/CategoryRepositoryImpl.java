@@ -58,5 +58,11 @@ public class CategoryRepositoryImpl implements CategoryRepository{
         return categoryJpaRepository.existsByNameAndLevel(name, level);
     }
 
+    @Override
+    public List<Category> findAllByNameAndLevel(String name, Long level) {
+        List<Category> categories = categoryJpaRepository.findAllByNameAndLevel(name, level);
+        return categories;
+    }
+
 
 }
