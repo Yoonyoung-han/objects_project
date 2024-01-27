@@ -1,4 +1,4 @@
-truncate table address;
+truncate table addressEntity;
 
 truncate table admin;
 
@@ -34,9 +34,9 @@ truncate table prod_option;
 
 truncate table options;
 
-truncate table prod_order;
+truncate table order;
 
-truncate table prod_order_detail;
+truncate table order_detail;
 
 truncate table prod_tag;
 

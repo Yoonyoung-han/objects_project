@@ -1,7 +1,7 @@
 package com.objects.marketbridge.domain.product.repository;
 
-import com.objects.marketbridge.domain.model.Product;
-import org.assertj.core.api.Assertions;
+import com.objects.marketbridge.common.infra.entity.ProductEntity;
+import com.objects.marketbridge.product.repository.ProductRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,12 +11,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class ProductRepositoryImplTest {
 
-    @Autowired ProductRepository productRepository;
+    @Autowired
+    ProductRepository productRepository;
 
     @AfterEach
     void tearDown(){
@@ -28,10 +28,10 @@ class ProductRepositoryImplTest {
     void findByName(){
         //given
         String productName = "가방";
-        productRepository.save(Product.builder().name(productName).build());
+        productRepository.save(ProductEntity.builder().name(productName).build());
 
         //when
-        List<Product> products = productRepository.findByName(productName);
+        List<ProductEntity> products = productRepository.findByName(productName);
 
         //then
         assertThat(products).isInstanceOf(List.class);

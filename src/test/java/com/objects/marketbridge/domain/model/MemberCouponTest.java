@@ -1,5 +1,6 @@
 package com.objects.marketbridge.domain.model;
 
+import com.objects.marketbridge.common.infra.entity.MemberCouponEntity;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,7 @@ class MemberCouponTest {
     public void returnCoupon() {
         // given
         LocalDateTime localDateTime = LocalDateTime.of(2024, 1, 16, 6, 34);
-        MemberCoupon usedCoupon = createMemberCoupon(localDateTime, true);
+        MemberCouponEntity usedCoupon = createMemberCoupon(localDateTime, true);
 
         // when
         usedCoupon.returnCoupon();
@@ -23,8 +24,8 @@ class MemberCouponTest {
                 .containsExactly(null, false);
     }
 
-    private static MemberCoupon createMemberCoupon(LocalDateTime localDateTime, boolean isUsed) {
-        return MemberCoupon.builder()
+    private static MemberCouponEntity createMemberCoupon(LocalDateTime localDateTime, boolean isUsed) {
+        return MemberCouponEntity.builder()
                 .usedDate(localDateTime)
                 .isUsed(isUsed)
                 .build();
