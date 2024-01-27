@@ -1,4 +1,4 @@
-create table if not exists MarketBridge.address
+create table if not exists MarketBridge.addressEntity
 (
     address_id bigint auto_increment
         primary key,
@@ -468,7 +468,7 @@ create table if not exists MarketBridge.seller
     license_no varchar(255) not null,
     category   varchar(255) not null,
     detail     varchar(255) not null,
-    address    varchar(255) not null,
+    addressEntity    varchar(255) not null,
     email      varchar(255) not null,
     account_no varchar(255) not null,
 

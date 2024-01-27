@@ -1,11 +1,12 @@
 package com.objects.marketbridge.domain.order.service;
 
-import com.objects.marketbridge.domain.coupon.repository.CouponRepository;
-import com.objects.marketbridge.domain.coupon.repository.MemberCouponRepository;
-import com.objects.marketbridge.domain.member.repository.MemberRepository;
-import com.objects.marketbridge.model.Coupon;
-import com.objects.marketbridge.model.Member;
-import com.objects.marketbridge.model.MemberCoupon;
+import com.objects.marketbridge.product.coupon.repository.CouponRepository;
+import com.objects.marketbridge.product.coupon.repository.MemberCouponRepository;
+import com.objects.marketbridge.member.repository.MemberRepository;
+import com.objects.marketbridge.common.infra.entity.Coupon;
+import com.objects.marketbridge.common.infra.entity.Member;
+import com.objects.marketbridge.common.infra.entity.MemberCoupon;
+import com.objects.marketbridge.order.service.CouponUsageService;
 import jakarta.persistence.EntityNotFoundException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,7 +29,8 @@ class CouponUsageServiceTest {
     MemberCouponRepository memberCouponRepository;
     @Autowired MemberRepository memberRepository;
     @Autowired CouponRepository couponRepository;
-    @Autowired CouponUsageService couponUsageService;
+    @Autowired
+    CouponUsageService couponUsageService;
 
     @BeforeEach
     void init() {

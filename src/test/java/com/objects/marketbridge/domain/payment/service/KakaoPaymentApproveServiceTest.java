@@ -1,7 +1,7 @@
 package com.objects.marketbridge.domain.payment.service;
 
-import com.objects.marketbridge.domain.order.service.port.OrderRepository;
-import com.objects.marketbridge.domain.payment.config.KakaoPayConfig;
+import com.objects.marketbridge.order.service.port.OrderRepository;
+import com.objects.marketbridge.order.payment.config.KakaoPayConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

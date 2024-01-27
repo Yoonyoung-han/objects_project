@@ -1,4 +1,4 @@
-truncate table address;
+truncate table addressEntity;
 
 truncate table admin;
 
