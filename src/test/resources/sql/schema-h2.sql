@@ -28,7 +28,7 @@ CREATE TABLE seller (
                           owner	varchar(255)	,
                           category	varchar(255)	,
                           detail	varchar(255)	,
-                          address	varchar(255)	,
+                          addressEntity	varchar(255)	,
                           license_no	varchar(255)	,
                           email	varchar(255)	,
                           account_no	varchar(255)	,
@@ -37,9 +37,9 @@ CREATE TABLE seller (
                           deleted_at	timestamp	
 );
 
-DROP TABLE IF EXISTS address;
+DROP TABLE IF EXISTS addressEntity;
 
-CREATE TABLE address (
+CREATE TABLE addressEntity (
                            address_id	bigint auto_increment
                                primary key,
                            member_id	bigint	,

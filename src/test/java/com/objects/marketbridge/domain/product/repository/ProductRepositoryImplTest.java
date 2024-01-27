@@ -1,6 +1,7 @@
 package com.objects.marketbridge.domain.product.repository;
 
-import com.objects.marketbridge.model.Product;
+import com.objects.marketbridge.common.infra.entity.Product;
+import com.objects.marketbridge.product.repository.ProductRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,8 @@ import static org.assertj.core.api.Assertions.*;
 @SpringBootTest
 class ProductRepositoryImplTest {
 
-    @Autowired ProductRepository productRepository;
+    @Autowired
+    ProductRepository productRepository;
 
     @AfterEach
     void tearDown(){

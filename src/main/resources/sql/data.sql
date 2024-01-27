@@ -1,5 +1,5 @@
 /*-- Address
-INSERT INTO address (address_id, city, street, zip_code)
+INSERT INTO addressEntity (address_id, city, street, zip_code)
 VALUES
     (1, 'Seoul', 'Gangnam-gu', '12345'),
     (2, 'Busan', 'Haeundae-gu', '67890');

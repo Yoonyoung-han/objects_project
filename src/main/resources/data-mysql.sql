@@ -9,13 +9,13 @@ VALUES ('Regular', 'Email', 'Silver', 'member1@example.com', '03ac674216f3e15c76
 ('VIP', 'Facebook', 'Gold', 'member2@example.com', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'member Two', '010-9876-5432',  1, 1, '2024-01-18 10:45:00', '2024-01-19 08:30:00', NULL);
 
 -- Insert statements for seller table
-INSERT INTO marketbridge.seller (name, biz_no, owner, category, detail, address, license_no, email, account_no, created_at, updated_at, deleted_at)
+INSERT INTO marketbridge.seller (name, biz_no, owner, category, detail, addressEntity, license_no, email, account_no, created_at, updated_at, deleted_at)
 VALUES
     ('ABC Electronics', '123456789', 'David Lee', 'Electronics', 'Electronics seller', '123 Main St', '987654321', 'abc@example.com', '1234567890123456', NOW(), NOW(), NULL),
     ('XYZ Clothing', '987654321', 'Emma Kim', 'Clothing', 'Clothing seller', '456 Oak St', '123456789', 'xyz@example.com', '6543210987654321', NOW(), NOW(), NULL);
 
--- Insert statements for address table
-INSERT INTO marketbridge.address (member_id, alias, name, phone_no, city, street, zipcode, is_default, created_at, updated_at, deleted_at)
+-- Insert statements for addressEntity table
+INSERT INTO marketbridge.addressEntity (member_id, alias, name, phone_no, city, street, zipcode, is_default, created_at, updated_at, deleted_at)
 VALUES
     (1, 'Home', 'John Doe', '1234567890', 'Seoul', '123 Main St', '12345', 1, NOW(), NOW(), NULL),
     (2, 'Office', 'Jane Doe', '9876543210', 'Busan', '456 Oak St', '54321', 1, NOW(), NOW(), NULL);
