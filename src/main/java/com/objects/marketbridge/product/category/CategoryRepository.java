@@ -1,9 +1,9 @@
 package com.objects.marketbridge.product.category;
 
-import com.objects.marketbridge.common.infra.entity.Category;
+import com.objects.marketbridge.common.infra.entity.CategoryEntity;
 
 public interface CategoryRepository {
 
-    Category findById(Long id);
+    CategoryEntity findById(Long id);
 
 }

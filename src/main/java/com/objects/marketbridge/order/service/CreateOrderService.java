@@ -1,6 +1,6 @@
 package com.objects.marketbridge.order.service;
 
-import com.objects.marketbridge.member.address.repository.AddressRepository;
+import com.objects.marketbridge.member.repository.AddressRepository;
 import com.objects.marketbridge.common.infra.entity.*;
 import com.objects.marketbridge.product.coupon.repository.CouponRepository;
 import com.objects.marketbridge.product.coupon.repository.MemberCouponRepository;
@@ -53,14 +53,14 @@ public class CreateOrderService {
         order.setTotalUsedCouponPrice(getTotalCouponPrice(orderDetails));
 
         // 4. MemberCoupon 의 isUsed 변경
-        List<MemberCoupon> memberCoupons = getMemberCoupons(orderDetails, createOrderDto.getMemberId());
+        List<MemberCouponEntity> memberCoupons = getMemberCoupons(orderDetails, createOrderDto.getMemberId());
         couponUsageService.applyCouponUsage(memberCoupons, true, LocalDateTime.now());
 
         // 5. Product 의 stock 감소
         productStockService.decrease(orderDetails);
     }
 
-    private List<MemberCoupon> getMemberCoupons(List<OrderDetail> orderDetails, Long memberId) {
+    private List<MemberCouponEntity> getMemberCoupons(List<OrderDetail> orderDetails, Long memberId) {
 
         return orderDetails.stream()
                 .filter(o -> o.getCoupon() != null)
@@ -80,7 +80,7 @@ public class CreateOrderService {
 
     private Order createOrder(CreateOrderDto createOrderDto) {
 
-        Member member = memberRepository.findById(createOrderDto.getMemberId()).orElseThrow(EntityNotFoundException::new);
+        MemberEntity member = memberRepository.findById(createOrderDto.getMemberId()).orElseThrow(EntityNotFoundException::new);
         AddressEntity addressEntity = addressRepository.findById(createOrderDto.getAddressId());
         String orderName = createOrderDto.getOrderName();
         String orderNo = createOrderDto.getOrderNo();
@@ -97,9 +97,9 @@ public class CreateOrderService {
 
         for (ProductValue productValue : productValues) {
 
-            Product product = productRepository.findById(productValue.getProductId());
+            ProductEntity product = productRepository.findById(productValue.getProductId());
             // 쿠폰이 적용안된 product 가 존재할 경우 그냥 null 저장
-            Coupon coupon = (productValue.getCouponId() != null) ? couponRepository.findById(productValue.getCouponId()) : null ;
+            CouponEntity coupon = (productValue.getCouponId() != null) ? couponRepository.findById(productValue.getCouponId()) : null ;
             String orderNo = order.getOrderNo();
             Long quantity = productValue.getQuantity();
             Long price = product.getPrice();

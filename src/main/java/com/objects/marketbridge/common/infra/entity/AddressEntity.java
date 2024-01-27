@@ -18,7 +18,7 @@ public class AddressEntity extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    private Member member;
+    private MemberEntity member;
 
     @Embedded
     private AddressValue addressValue;
@@ -27,14 +27,14 @@ public class AddressEntity extends BaseEntity{
 
 
     @Builder
-    private AddressEntity(Member member, AddressValue addressValue, boolean isDefault) {
+    private AddressEntity(MemberEntity member, AddressValue addressValue, boolean isDefault) {
         this.member = member;
         this.addressValue = addressValue;
         this.isDefault = isDefault;
     }
 
     // 연관관계 편의 메서드 -> Address 쪽에서 한번에 저장
-    public void setMember(Member member) {
+    public void setMember(MemberEntity member) {
         if (this.member != null) {
             this.member.getAddressEntities().remove(this);
         }

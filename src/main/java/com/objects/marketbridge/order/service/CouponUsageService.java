@@ -1,6 +1,6 @@
 package com.objects.marketbridge.order.service;
 
-import com.objects.marketbridge.common.infra.entity.MemberCoupon;
+import com.objects.marketbridge.common.infra.entity.MemberCouponEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,7 +11,7 @@ import java.util.List;
 @Transactional
 public class CouponUsageService {
 
-    public void applyCouponUsage(List<MemberCoupon> memberCoupons, Boolean isUsed, LocalDateTime usedDate) {
+    public void applyCouponUsage(List<MemberCouponEntity> memberCoupons, Boolean isUsed, LocalDateTime usedDate) {
 
         memberCoupons.forEach(mc -> mc.applyCouponUsage(isUsed, usedDate));
     }

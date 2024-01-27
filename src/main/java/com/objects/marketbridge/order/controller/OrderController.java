@@ -13,7 +13,7 @@ import com.objects.marketbridge.order.payment.config.KakaoPayConfig;
 import com.objects.marketbridge.common.interceptor.ApiResponse;
 import com.objects.marketbridge.common.interceptor.error.CustomLogicException;
 import com.objects.marketbridge.common.security.annotation.AuthMemberId;
-import com.objects.marketbridge.common.infra.entity.Member;
+import com.objects.marketbridge.common.infra.entity.MemberEntity;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -41,13 +41,13 @@ public class OrderController {
     public ApiResponse<CheckoutResponse> getCheckout(
             @AuthMemberId Long memberId) {
 
-        Member member = memberRepository.findByIdWithAddresses(memberId).orElseThrow(EntityNotFoundException::new);
+        MemberEntity member = memberRepository.findByIdWithAddresses(memberId).orElseThrow(EntityNotFoundException::new);
         CheckoutResponse checkoutResponse = createCheckoutResponse(member);
 
         return ApiResponse.ok(checkoutResponse);
     }
 
-    private CheckoutResponse createCheckoutResponse(Member member) {
+    private CheckoutResponse createCheckoutResponse(MemberEntity member) {
 
         AddressEntity addressEntity = filterDefaultAddress(member.getAddressEntities());
 

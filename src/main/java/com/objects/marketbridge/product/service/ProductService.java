@@ -1,5 +1,6 @@
 package com.objects.marketbridge.product.service;
 
+import com.objects.marketbridge.common.domain.enums.ImageType;
 import com.objects.marketbridge.common.infra.entity.*;
 import com.objects.marketbridge.product.dto.ProductRequestDto;
 import com.objects.marketbridge.product.Image.ImageRepository;
@@ -32,10 +33,10 @@ public class ProductService {
     public Long registerProduct(ProductRequestDto productRequestDto) {
 
         // category가 DB에 등록되어있다고 가정.
-        Category category = categoryRepository.findById(productRequestDto.getCategoryId());
+        CategoryEntity category = categoryRepository.findById(productRequestDto.getCategoryId());
 
         // ProductRequestDto에서 필요한 정보 추출하여 Product 엔터티 생성
-        Product product = Product.builder()
+        ProductEntity product = ProductEntity.builder()
                 .category(category)
                 .isOwn(productRequestDto.getIsOwn())
                 .name(productRequestDto.getName())
@@ -52,12 +53,12 @@ public class ProductService {
                 // 상품등록시 image테이블에 아이템이미지url들 추가, product_image테이블에 추가.
         List<String> itemImgUrls = productRequestDto.getItemImgUrls();
         for (String itemImgUrl : itemImgUrls) {
-            Image itemImg = Image.builder()
+            ImageEntity itemImg = ImageEntity.builder()
                     .type(ImageType.ITEM_IMG.toString())
                     .url(itemImgUrl).build();
             imageRepository.save(itemImg);
 
-            ProductImage productImage = ProductImage.builder()
+            ProductImageEntity productImage = ProductImageEntity.builder()
                     .image(imageRepository.findById(itemImg.getId()))
                     .product(productRepository.findById(product.getId()))
                     .build();
@@ -69,12 +70,12 @@ public class ProductService {
         // 상품등록시 image테이블에 디테일이미지url들 추가, product_image테이블에 추가.
         List<String> detailImgUrls = productRequestDto.getDetailImgUrls();
         for (String detailImgUrl : detailImgUrls) {
-            Image detailImg = Image.builder()
+            ImageEntity detailImg = ImageEntity.builder()
                     .type(ImageType.DETAIL_IMG.toString())
                     .url(detailImgUrl).build();
             imageRepository.save(detailImg);
 
-            ProductImage productImage = ProductImage.builder()
+            ProductImageEntity productImage = ProductImageEntity.builder()
                     .image(imageRepository.findById(detailImg.getId()))
                     .product(productRepository.findById(product.getId()))
                     .build();
@@ -91,7 +92,7 @@ public class ProductService {
         // product(id)와 option(id)가 등록되게 prod_option테이블에 등록.
         List<String> optionNames = productRequestDto.getOptionNames();
         for (String optionName : optionNames) {
-            ProdOption prodOption = ProdOption.builder()
+            ProdOptionEntity prodOption = ProdOptionEntity.builder()
                     .product(productRepository.findById(product.getId()))
                     .option(optionRepository.findByName(optionName))
                     .build();

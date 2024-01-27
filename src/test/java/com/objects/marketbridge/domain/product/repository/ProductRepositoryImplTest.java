@@ -1,6 +1,6 @@
 package com.objects.marketbridge.domain.product.repository;
 
-import com.objects.marketbridge.common.infra.entity.Product;
+import com.objects.marketbridge.common.infra.entity.ProductEntity;
 import com.objects.marketbridge.product.repository.ProductRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -28,10 +28,10 @@ class ProductRepositoryImplTest {
     void findByName(){
         //given
         String productName = "가방";
-        productRepository.save(Product.builder().name(productName).build());
+        productRepository.save(ProductEntity.builder().name(productName).build());
 
         //when
-        List<Product> products = productRepository.findByName(productName);
+        List<ProductEntity> products = productRepository.findByName(productName);
 
         //then
         assertThat(products).isInstanceOf(List.class);

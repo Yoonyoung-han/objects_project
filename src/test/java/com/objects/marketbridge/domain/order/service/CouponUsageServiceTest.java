@@ -3,9 +3,9 @@ package com.objects.marketbridge.domain.order.service;
 import com.objects.marketbridge.product.coupon.repository.CouponRepository;
 import com.objects.marketbridge.product.coupon.repository.MemberCouponRepository;
 import com.objects.marketbridge.member.repository.MemberRepository;
-import com.objects.marketbridge.common.infra.entity.Coupon;
-import com.objects.marketbridge.common.infra.entity.Member;
-import com.objects.marketbridge.common.infra.entity.MemberCoupon;
+import com.objects.marketbridge.common.infra.entity.CouponEntity;
+import com.objects.marketbridge.common.infra.entity.MemberEntity;
+import com.objects.marketbridge.common.infra.entity.MemberCouponEntity;
 import com.objects.marketbridge.order.service.CouponUsageService;
 import jakarta.persistence.EntityNotFoundException;
 import org.assertj.core.api.Assertions;
@@ -34,13 +34,13 @@ class CouponUsageServiceTest {
 
     @BeforeEach
     void init() {
-        Member member = Member.builder().email("test@email.com").build();
+        MemberEntity member = MemberEntity.builder().email("test@email.com").build();
         memberRepository.save(member);
 
-        List<Coupon> coupons = createCoupons();
+        List<CouponEntity> coupons = createCoupons();
         couponRepository.saveAll(coupons);
 
-        List<MemberCoupon> memberCoupons = createMemberCoupons(member, coupons);
+        List<MemberCouponEntity> memberCoupons = createMemberCoupons(member, coupons);
         memberCouponRepository.saveAll(memberCoupons);
     }
 
@@ -52,41 +52,41 @@ class CouponUsageServiceTest {
         //given
         LocalDateTime dateTime = LocalDateTime.now();
 
-        List<Coupon> coupons = couponRepository.findAll();
+        List<CouponEntity> coupons = couponRepository.findAll();
         Long memberId = memberRepository.findByEmail("test@email.com").orElseThrow(EntityNotFoundException::new).getId();
 
-        List<MemberCoupon> memberCoupons = getMemberCoupons(coupons, memberId);
+        List<MemberCouponEntity> memberCoupons = getMemberCoupons(coupons, memberId);
 
         //when
         couponUsageService.applyCouponUsage(memberCoupons, true, dateTime);
 
         //then
-        for (MemberCoupon mc : memberCoupons) {
+        for (MemberCouponEntity mc : memberCoupons) {
             Assertions.assertThat(mc.getIsUsed()).isTrue();
             Assertions.assertThat(mc.getUsedDate()).isEqualTo(dateTime);
         }
     }
 
-    private List<MemberCoupon> getMemberCoupons(List<Coupon> coupons, Long memberId) {
+    private List<MemberCouponEntity> getMemberCoupons(List<CouponEntity> coupons, Long memberId) {
         return coupons.stream()
                 .map(c ->
                         memberCouponRepository.findByMember_IdAndCoupon_Id(memberId, c.getId()))
                 .toList();
     }
 
-    private List<Coupon> createCoupons() {
+    private List<CouponEntity> createCoupons() {
 
-        Coupon coupon1 = Coupon.builder().name("1000원짜리 쿠폰").build();
-        Coupon coupon2 = Coupon.builder().name("2000원짜리 쿠폰").build();
-        Coupon coupon3 = Coupon.builder().name("3000원짜리 쿠폰").build();
+        CouponEntity coupon1 = CouponEntity.builder().name("1000원짜리 쿠폰").build();
+        CouponEntity coupon2 = CouponEntity.builder().name("2000원짜리 쿠폰").build();
+        CouponEntity coupon3 = CouponEntity.builder().name("3000원짜리 쿠폰").build();
 
         return List.of(coupon1, coupon2, coupon3);
     }
 
-    private List<MemberCoupon> createMemberCoupons(Member member, List<Coupon> coupons) {
-        MemberCoupon memberCoupon1 = MemberCoupon.builder().member(member).coupon(coupons.get(0)).build();
-        MemberCoupon memberCoupon2 = MemberCoupon.builder().member(member).coupon(coupons.get(1)).build();
-        MemberCoupon memberCoupon3 = MemberCoupon.builder().member(member).coupon(coupons.get(2)).build();
+    private List<MemberCouponEntity> createMemberCoupons(MemberEntity member, List<CouponEntity> coupons) {
+        MemberCouponEntity memberCoupon1 = MemberCouponEntity.builder().member(member).coupon(coupons.get(0)).build();
+        MemberCouponEntity memberCoupon2 = MemberCouponEntity.builder().member(member).coupon(coupons.get(1)).build();
+        MemberCouponEntity memberCoupon3 = MemberCouponEntity.builder().member(member).coupon(coupons.get(2)).build();
 
         return List.of(memberCoupon1, memberCoupon2, memberCoupon3);
     }

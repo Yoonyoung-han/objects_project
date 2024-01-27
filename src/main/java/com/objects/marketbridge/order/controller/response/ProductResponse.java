@@ -1,7 +1,7 @@
 package com.objects.marketbridge.order.controller.response;
 
 import com.objects.marketbridge.order.domain.OrderDetail;
-import com.objects.marketbridge.common.infra.entity.Product;
+import com.objects.marketbridge.common.infra.entity.ProductEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,7 +25,7 @@ public class ProductResponse {
         this.quantity = quantity;
     }
 
-    public static ProductResponse of(Product product, Long quantity) {
+    public static ProductResponse of(ProductEntity product, Long quantity) {
         return ProductResponse.builder()
                 .productId(product.getId())
                 .name(product.getName())

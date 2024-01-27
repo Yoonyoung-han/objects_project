@@ -1,8 +1,8 @@
 package com.objects.marketbridge.product.option;
 
-import com.objects.marketbridge.common.infra.entity.ProdOption;
+import com.objects.marketbridge.common.infra.entity.ProdOptionEntity;
 
 public interface ProdOptionRepository {
 
-    void save(ProdOption prodOption);
+    void save(ProdOptionEntity prodOption);
 }

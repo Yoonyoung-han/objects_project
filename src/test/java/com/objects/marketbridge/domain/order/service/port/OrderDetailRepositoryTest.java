@@ -5,7 +5,7 @@ import com.objects.marketbridge.order.domain.OrderDetail;
 import com.objects.marketbridge.order.service.port.OrderDetailRepository;
 import com.objects.marketbridge.order.service.port.OrderRepository;
 import com.objects.marketbridge.product.repository.ProductRepository;
-import com.objects.marketbridge.common.infra.entity.Product;
+import com.objects.marketbridge.common.infra.entity.ProductEntity;
 import jakarta.persistence.EntityManager;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -110,9 +110,9 @@ class OrderDetailRepositoryTest {
     @DisplayName("주문 ID와 상품 리스트가 주어지면 주문 상세 리스트를 조회할 수 있다.")
     public void findByProdOrder_IdAndProductIn() {
         // given
-        Product product1 = Product.builder().name("옷").build();
-        Product product2 = Product.builder().name("바지").build();
-        Product product3 = Product.builder().name("신발").build();
+        ProductEntity product1 = ProductEntity.builder().name("옷").build();
+        ProductEntity product2 = ProductEntity.builder().name("바지").build();
+        ProductEntity product3 = ProductEntity.builder().name("신발").build();
 
         OrderDetail orderDetail1 = OrderDetail.builder().product(product1).build();
         OrderDetail orderDetail2 = OrderDetail.builder().product(product2).build();
@@ -123,7 +123,7 @@ class OrderDetailRepositoryTest {
         order.addOrderDetail(orderDetail2);
         order.addOrderDetail(orderDetail3);
 
-        List<Product> products = List.of(product1, product2, product3);
+        List<ProductEntity> products = List.of(product1, product2, product3);
         productRepository.saveAll(products);
         orderRepository.save(order);
 
@@ -144,17 +144,17 @@ class OrderDetailRepositoryTest {
     @DisplayName("주문 번호와 상품 ID 리스트가 주어지면 상품 상세 리스트를 조회할 수 있다.")
     public void findByOrderNoAndProduct_IdIn() {
         // given
-        Product product1 = Product.builder()
+        ProductEntity product1 = ProductEntity.builder()
                 .price(1000L)
                 .thumbImg("썸네일1")
                 .name("옷")
                 .build();
-        Product product2 = Product.builder()
+        ProductEntity product2 = ProductEntity.builder()
                 .name("바지")
                 .price(2000L)
                 .thumbImg("썸네일2")
                 .build();
-        Product product3 = Product.builder()
+        ProductEntity product3 = ProductEntity.builder()
                 .name("신발")
                 .price(3000L)
                 .thumbImg("썸네일3")
@@ -192,10 +192,10 @@ class OrderDetailRepositoryTest {
         order.addOrderDetail(orderDetail2);
         order.addOrderDetail(orderDetail3);
 
-        List<Product> products = List.of(product1, product2, product3);
+        List<ProductEntity> products = List.of(product1, product2, product3);
         productRepository.saveAll(products);
         orderRepository.save(order);
-        List<Long> productIds = products.stream().map(Product::getId).toList();
+        List<Long> productIds = products.stream().map(ProductEntity::getId).toList();
 
         // when
         List<OrderDetail> orderDetails = orderDetailRepository.findByOrderNoAndProduct_IdIn(order.getOrderNo(), productIds);

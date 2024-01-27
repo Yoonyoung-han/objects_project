@@ -8,8 +8,8 @@ import com.objects.marketbridge.order.domain.OrderDetail;
 import com.objects.marketbridge.order.service.port.OrderDtoRepository;
 import com.objects.marketbridge.order.service.port.OrderRepository;
 import com.objects.marketbridge.product.repository.ProductRepository;
-import com.objects.marketbridge.common.infra.entity.Member;
-import com.objects.marketbridge.common.infra.entity.Product;
+import com.objects.marketbridge.common.infra.entity.MemberEntity;
+import com.objects.marketbridge.common.infra.entity.ProductEntity;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -51,7 +51,7 @@ class OrderDtoRepositoryTest {
     @DisplayName("유저가 반품, 취소한 상품들을 조회할 수 있다.")
     public void findOrdersByMemberId() {
         // given
-        Member member = Member.builder().build();
+        MemberEntity member = MemberEntity.builder().build();
 
         Order order1 = Order.builder()
                 .member(member)
@@ -63,17 +63,17 @@ class OrderDtoRepositoryTest {
                 .orderNo("456")
                 .build();
 
-        Product product1 = Product.builder()
+        ProductEntity product1 = ProductEntity.builder()
                 .productNo("1")
                 .name("옷")
                 .price(1000L)
                 .build();
-        Product product2 = Product.builder()
+        ProductEntity product2 = ProductEntity.builder()
                 .productNo("2")
                 .name("신발")
                 .price(2000L)
                 .build();
-        Product product3 = Product.builder()
+        ProductEntity product3 = ProductEntity.builder()
                 .productNo("3")
                 .name("바지")
                 .price(3000L)

@@ -5,12 +5,13 @@ import com.objects.marketbridge.member.dto.FindPointDto;
 import com.objects.marketbridge.member.dto.SignInDto;
 import com.objects.marketbridge.member.dto.SignUpDto;
 import com.objects.marketbridge.member.repository.MemberRepository;
-import com.objects.marketbridge.common.infra.entity.Member;
+import com.objects.marketbridge.common.infra.entity.MemberEntity;
 import com.objects.marketbridge.common.security.dto.JwtTokenDto;
 import com.objects.marketbridge.common.security.jwt.JwtTokenProvider;
-import com.objects.marketbridge.common.infra.entity.Membership;
-import com.objects.marketbridge.common.infra.entity.Point;
+import com.objects.marketbridge.common.domain.enums.Membership;
+import com.objects.marketbridge.common.infra.entity.PointEntity;
 import com.objects.marketbridge.common.security.user.CustomUserDetails;
+import com.objects.marketbridge.member.repository.MemberRepositoryImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
@@ -44,7 +45,7 @@ public class MemberService {
         if (isDuplicateEmail) throw new BadRequestException("이미 존재하는 이메일 입니다.");
 
         String encodedPassword = passwordEncoder.encode(signUpDto.getPassword());
-        Member member = signUpDto.toEntity(encodedPassword);
+        MemberEntity member = signUpDto.toEntity(encodedPassword);
         memberRepository.save(member);
     }
 
@@ -69,7 +70,7 @@ public class MemberService {
 
     @Transactional
     public void changeMemberShip(Long id){
-        Member findMember = memberRepository.findById(id)
+        MemberEntity findMember = memberRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Member not found with id: " + id)); // id 를 통한 조회실패 예외발생
 
         if(findMember.getMembership().equals("BASIC")){//멤버십 WOW 등록
@@ -82,9 +83,9 @@ public class MemberService {
     }
 
     public FindPointDto findPointById(Long id){
-        Member findMemberWithPoint=memberRepository.findByIdWithPoint(id)
+        MemberEntity findMemberWithPoint=memberRepository.findByIdWithPoint(id)
                 .orElseThrow(() -> new IllegalArgumentException("Member not found with id: " + id));
 
-        return Point.toDto(findMemberWithPoint);
+        return PointEntity.toDto(findMemberWithPoint);
     }
 }

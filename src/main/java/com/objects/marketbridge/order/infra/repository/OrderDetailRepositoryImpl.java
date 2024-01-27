@@ -3,7 +3,7 @@ package com.objects.marketbridge.order.infra.repository;
 import com.objects.marketbridge.common.infra.repository.OrderDetailJpaRepository;
 import com.objects.marketbridge.order.domain.OrderDetail;
 import com.objects.marketbridge.order.service.port.OrderDetailRepository;
-import com.objects.marketbridge.common.infra.entity.Product;
+import com.objects.marketbridge.common.infra.entity.ProductEntity;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
@@ -69,7 +69,7 @@ public class OrderDetailRepositoryImpl implements OrderDetailRepository {
     }
 
     @Override
-    public List<OrderDetail> findByOrder_IdAndProductIn(Long orderId, List<Product> products) {
+    public List<OrderDetail> findByOrder_IdAndProductIn(Long orderId, List<ProductEntity> products) {
         return orderDetailJpaRepository.findByOrder_IdAndProductIn(orderId, products);
     }
 

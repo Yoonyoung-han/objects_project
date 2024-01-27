@@ -6,7 +6,7 @@ import com.objects.marketbridge.order.service.port.OrderDetailRepository;
 import com.objects.marketbridge.product.repository.ProductRepository;
 import com.objects.marketbridge.common.interceptor.error.CustomLogicException;
 import com.objects.marketbridge.common.interceptor.error.ErrorCode;
-import com.objects.marketbridge.common.infra.entity.Product;
+import com.objects.marketbridge.common.infra.entity.ProductEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,7 +35,7 @@ class ProductStockServiceTest {
 
         Long quantity = 1L;
 
-        List<Product> products = createProducts();
+        List<ProductEntity> products = createProducts();
         productRepository.saveAll(products);
 
         List<OrderDetail> orderDetails = createOrderDetails(products, quantity);
@@ -47,8 +47,8 @@ class ProductStockServiceTest {
 
         //given
         List<OrderDetail> orderDetails = orderDetailRepository.findAll();
-        List<Product> products = productRepository.findAll();
-        List<Long> stocks = products.stream().map(Product::getStock).toList();
+        List<ProductEntity> products = productRepository.findAll();
+        List<Long> stocks = products.stream().map(ProductEntity::getStock).toList();
         List<Long> quantityList = orderDetails.stream().map(OrderDetail::getQuantity).toList();
 
         //when
@@ -59,16 +59,16 @@ class ProductStockServiceTest {
                 .forEach(i -> assertThat(products.get(i).getStock()).isEqualTo(stocks.get(i)-quantityList.get(i)));
     }
 
-    private List<Product> createProducts() {
+    private List<ProductEntity> createProducts() {
 
-        Product product1 = Product.builder().stock(1L).build();
-        Product product2 = Product.builder().stock(2L).build();
-        Product product3 = Product.builder().stock(3L).build();
+        ProductEntity product1 = ProductEntity.builder().stock(1L).build();
+        ProductEntity product2 = ProductEntity.builder().stock(2L).build();
+        ProductEntity product3 = ProductEntity.builder().stock(3L).build();
 
         return List.of(product1, product2, product3);
     }
 
-    private List<OrderDetail> createOrderDetails(List<Product> products, Long quantity) {
+    private List<OrderDetail> createOrderDetails(List<ProductEntity> products, Long quantity) {
 
         return products.stream().map(p -> OrderDetail.builder().product(p).quantity(quantity).build()).toList();
     }
@@ -79,9 +79,9 @@ class ProductStockServiceTest {
 
         //given
         List<OrderDetail> orderDetails = orderDetailRepository.findAll();
-        List<Product> products = productRepository.findAll();
+        List<ProductEntity> products = productRepository.findAll();
         products.get(0).changeStock(0L); // 재고 0 으로 변경
-        List<Long> stocks = products.stream().map(Product::getStock).toList();
+        List<Long> stocks = products.stream().map(ProductEntity::getStock).toList();
         List<Long> quantityList = orderDetails.stream().map(OrderDetail::getQuantity).toList();
 
         //when, then

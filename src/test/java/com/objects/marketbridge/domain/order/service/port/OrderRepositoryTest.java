@@ -1,6 +1,6 @@
 package com.objects.marketbridge.domain.order.service.port;
 
-import com.objects.marketbridge.common.infra.entity.Product;
+import com.objects.marketbridge.common.infra.entity.ProductEntity;
 import com.objects.marketbridge.order.domain.Order;
 import com.objects.marketbridge.order.domain.OrderDetail;
 import com.objects.marketbridge.member.repository.MemberRepository;
@@ -85,7 +85,7 @@ class OrderRepositoryTest {
     public void findOrderWithDetailsAndProduct() {
         // given
         Order order = Order.builder().build();
-        Product product = Product.builder().build();
+        ProductEntity product = ProductEntity.builder().build();
         OrderDetail orderDetail = OrderDetail.builder()
                 .order(order)
                 .product(product)

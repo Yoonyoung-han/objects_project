@@ -3,9 +3,9 @@ package com.objects.marketbridge.domain.coupon.repository;
 import com.objects.marketbridge.product.coupon.repository.CouponRepository;
 import com.objects.marketbridge.product.coupon.repository.MemberCouponRepository;
 import com.objects.marketbridge.member.repository.MemberRepository;
-import com.objects.marketbridge.common.infra.entity.Coupon;
-import com.objects.marketbridge.common.infra.entity.Member;
-import com.objects.marketbridge.common.infra.entity.MemberCoupon;
+import com.objects.marketbridge.common.infra.entity.CouponEntity;
+import com.objects.marketbridge.common.infra.entity.MemberEntity;
+import com.objects.marketbridge.common.infra.entity.MemberCouponEntity;
 import jakarta.persistence.EntityNotFoundException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,11 +30,11 @@ class MemberCouponRepositoryImplTest {
 
     @BeforeEach
     void init() {
-        Member member = Member.builder().email("test@email.com").build();
+        MemberEntity member = MemberEntity.builder().email("test@email.com").build();
         memberRepository.save(member);
-        Coupon coupon = Coupon.builder().name("5000원짜리 쿠폰").build();
+        CouponEntity coupon = CouponEntity.builder().name("5000원짜리 쿠폰").build();
         couponRepository.save(coupon);
-        MemberCoupon memberCoupon = MemberCoupon.builder().member(member).coupon(coupon).build();
+        MemberCouponEntity memberCoupon = MemberCouponEntity.builder().member(member).coupon(coupon).build();
         memberCouponRepository.save(memberCoupon);
     }
 
@@ -42,11 +42,11 @@ class MemberCouponRepositoryImplTest {
     @Test
     void findByMember_IdAndCoupon_Id(){
         //given
-        Member member = memberRepository.findByEmail("test@email.com").orElseThrow(EntityNotFoundException::new);
-        Coupon coupon = couponRepository.findAll().get(0);
+        MemberEntity member = memberRepository.findByEmail("test@email.com").orElseThrow(EntityNotFoundException::new);
+        CouponEntity coupon = couponRepository.findAll().get(0);
 
         //when
-        MemberCoupon memberCoupon = memberCouponRepository.findByMember_IdAndCoupon_Id(member.getId(), coupon.getId());
+        MemberCouponEntity memberCoupon = memberCouponRepository.findByMember_IdAndCoupon_Id(member.getId(), coupon.getId());
 
         //then
         Assertions.assertThat(memberCoupon.getMember().getEmail()).isEqualTo("test@email.com");

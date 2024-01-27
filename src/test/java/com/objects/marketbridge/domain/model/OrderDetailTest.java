@@ -1,7 +1,7 @@
 package com.objects.marketbridge.domain.model;
 
 import com.objects.marketbridge.order.domain.OrderDetail;
-import com.objects.marketbridge.common.infra.entity.Product;
+import com.objects.marketbridge.common.infra.entity.ProductEntity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -51,7 +51,7 @@ class OrderDetailTest {
     private OrderDetail createOrderDetail(String statusCode) {
         return OrderDetail
                 .builder()
-                .product(Product.builder()
+                .product(ProductEntity.builder()
                         .stock(10L)
                         .build())
                 .statusCode(statusCode)
