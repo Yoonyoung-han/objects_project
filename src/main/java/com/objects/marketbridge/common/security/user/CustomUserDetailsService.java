@@ -1,7 +1,7 @@
 package com.objects.marketbridge.common.security.user;
 
 import com.objects.marketbridge.member.repository.MemberRepository;
-import com.objects.marketbridge.common.infra.entity.Member;
+import com.objects.marketbridge.common.infra.entity.MemberEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,7 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Member member = memberRepository.findByEmail(email)
+        MemberEntity member = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("해당하는 회원을 찾을 수 없습니다."));
 
         // db에 저장하지 않고 여기서 권한 부여

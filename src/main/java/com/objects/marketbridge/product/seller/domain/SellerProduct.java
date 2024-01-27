@@ -1,7 +1,7 @@
 package com.objects.marketbridge.product.seller.domain;
 
 import com.objects.marketbridge.common.infra.entity.BaseEntity;
-import com.objects.marketbridge.common.infra.entity.Product;
+import com.objects.marketbridge.common.infra.entity.ProductEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -24,10 +24,10 @@ public class SellerProduct extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
-    private Product productId;
+    private ProductEntity productId;
 
     @Builder
-    private SellerProduct(Seller sellerId, Product productId) {
+    private SellerProduct(Seller sellerId, ProductEntity productId) {
         this.sellerId = sellerId;
         this.productId = productId;
     }

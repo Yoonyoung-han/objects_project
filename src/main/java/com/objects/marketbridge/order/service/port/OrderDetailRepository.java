@@ -1,7 +1,7 @@
 package com.objects.marketbridge.order.service.port;
 
 import com.objects.marketbridge.order.domain.OrderDetail;
-import com.objects.marketbridge.common.infra.entity.Product;
+import com.objects.marketbridge.common.infra.entity.ProductEntity;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public interface OrderDetailRepository  {
 
     List<OrderDetail> findByOrderNo(String orderNo);
 
-    List<OrderDetail> findByOrder_IdAndProductIn(Long orderId, List<Product> products);
+    List<OrderDetail> findByOrder_IdAndProductIn(Long orderId, List<ProductEntity> products);
 
     List<OrderDetail> findByOrderNoAndProduct_IdIn(String orderNo, List<Long> productIds);
 

@@ -1,6 +1,6 @@
 package com.objects.marketbridge.domain.order.service;
 
-import com.objects.marketbridge.member.address.repository.AddressRepository;
+import com.objects.marketbridge.member.repository.AddressRepository;
 import com.objects.marketbridge.common.infra.entity.*;
 import com.objects.marketbridge.product.coupon.repository.CouponRepository;
 import com.objects.marketbridge.product.coupon.repository.MemberCouponRepository;
@@ -51,7 +51,7 @@ class CreateOrderServiceTest {
     @BeforeEach
     void init(){
         // member 생성
-        Member member = createMember();
+        MemberEntity member = createMember();
         memberRepository.save(member);
 
         // address 생성
@@ -59,45 +59,45 @@ class CreateOrderServiceTest {
         addressRepository.save(addressEntity);
 
         // product 생성
-        List<Product> products = createProducts();
+        List<ProductEntity> products = createProducts();
         productRepository.saveAll(products);
 
         // coupon 생성
-        List<Coupon> coupons = createCoupons(products);
+        List<CouponEntity> coupons = createCoupons(products);
         couponRepository.saveAll(coupons);
 
         // memberCoupon 생성
-        List<MemberCoupon> memberCoupons = createMemberCoupons(member, coupons);
+        List<MemberCouponEntity> memberCoupons = createMemberCoupons(member, coupons);
         memberCouponRepository.saveAll(memberCoupons);
 
     }
 
-    private Member createMember() {
+    private MemberEntity createMember() {
 
-        return Member.builder()
+        return MemberEntity.builder()
                 .email("hong@email.com")
                 .name("홍길동").build();
     }
 
-    private AddressEntity createAddress(Member member) {
+    private AddressEntity createAddress(MemberEntity member) {
 
         return AddressEntity.builder()
                 .member(member).build();
     }
 
-    private List<Product> createProducts() {
+    private List<ProductEntity> createProducts() {
 
-        Product product1 = Product.builder()
+        ProductEntity product1 = ProductEntity.builder()
                 .name("가방")
                 .price(1000L)
                 .stock(5L).build();
 
-        Product product2 = Product.builder()
+        ProductEntity product2 = ProductEntity.builder()
                 .name("티비")
                 .stock(5L)
                 .price(2000L).build();
 
-        Product product3 = Product.builder()
+        ProductEntity product3 = ProductEntity.builder()
                 .name("워치")
                 .stock(5L)
                 .price(3000L).build();
@@ -105,14 +105,14 @@ class CreateOrderServiceTest {
         return List.of(product1, product2, product3);
     }
 
-    private List<Coupon> createCoupons(List<Product> products) {
+    private List<CouponEntity> createCoupons(List<ProductEntity> products) {
 
-        Coupon coupon1 = Coupon.builder()
+        CouponEntity coupon1 = CouponEntity.builder()
                 .price(2000L)
                 .product(products.get(0))
                 .name("가방쿠폰").build();
 
-        Coupon coupon2 = Coupon.builder()
+        CouponEntity coupon2 = CouponEntity.builder()
                 .price(2000L)
                 .product(products.get(1))
                 .name("티비쿠폰").build();
@@ -120,14 +120,14 @@ class CreateOrderServiceTest {
         return List.of(coupon1, coupon2);
     }
 
-    private List<MemberCoupon> createMemberCoupons(Member member, List<Coupon> coupons) {
+    private List<MemberCouponEntity> createMemberCoupons(MemberEntity member, List<CouponEntity> coupons) {
 
-        MemberCoupon memberCoupon1 = MemberCoupon.builder()
+        MemberCouponEntity memberCoupon1 = MemberCouponEntity.builder()
                 .member(member)
                 .coupon(coupons.get(0))
                 .isUsed(false).build();
 
-        MemberCoupon memberCoupon2 = MemberCoupon.builder()
+        MemberCouponEntity memberCoupon2 = MemberCouponEntity.builder()
                 .member(member)
                 .coupon(coupons.get(1))
                 .isUsed(false).build();
@@ -140,7 +140,7 @@ class CreateOrderServiceTest {
     void CreateOrder(){
 
         //given
-        Member member = memberRepository.findByEmail("hong@email.com").orElseThrow(EntityNotFoundException::new);
+        MemberEntity member = memberRepository.findByEmail("hong@email.com").orElseThrow(EntityNotFoundException::new);
         AddressEntity addressEntity = addressRepository.findByMemberId(member.getId()).get(0);
         Long defaultQuantity = 3L;
         CreateOrderDto createOrderDto = createDto(member, addressEntity, defaultQuantity);
@@ -158,9 +158,9 @@ class CreateOrderServiceTest {
         assertThat(order.getRealPrice()).isEqualTo(createOrderDto.getRealOrderPrice());
     }
 
-    private long getTotalCouponPrice(List<Coupon> coupons) {
+    private long getTotalCouponPrice(List<CouponEntity> coupons) {
 
-        return coupons.stream().mapToLong(Coupon::getPrice).sum();
+        return coupons.stream().mapToLong(CouponEntity::getPrice).sum();
     }
 
     private long getTotalOrderPrice(List<ProductValue> productValues) {
@@ -175,7 +175,7 @@ class CreateOrderServiceTest {
     void CreateOrderDetail(){
 
         //given
-        Member member = memberRepository.findByEmail("hong@email.com").orElseThrow(EntityNotFoundException::new);
+        MemberEntity member = memberRepository.findByEmail("hong@email.com").orElseThrow(EntityNotFoundException::new);
         AddressEntity addressEntity = addressRepository.findByMemberId(member.getId()).get(0);
         Long defaultQuantity = 3L;
         CreateOrderDto createOrderDto = createDto(member, addressEntity, defaultQuantity);
@@ -201,11 +201,11 @@ class CreateOrderServiceTest {
     void OrderDetailWithCoupon(){
 
         //given
-        Member member = memberRepository.findByEmail("hong@email.com").orElseThrow(EntityNotFoundException::new);
+        MemberEntity member = memberRepository.findByEmail("hong@email.com").orElseThrow(EntityNotFoundException::new);
         AddressEntity addressEntity = addressRepository.findByMemberId(member.getId()).get(0);
         Long defaultQuantity = 3L;
         CreateOrderDto createOrderDto = createDto(member, addressEntity, defaultQuantity);
-        List<Coupon> coupons = couponRepository.findAll();
+        List<CouponEntity> coupons = couponRepository.findAll();
 
         //when
         createOrderService.create(createOrderDto);
@@ -222,7 +222,7 @@ class CreateOrderServiceTest {
     void mappingOrderWithOrderDetail(){
 
         //given
-        Member member = memberRepository.findByEmail("hong@email.com").orElseThrow(EntityNotFoundException::new);
+        MemberEntity member = memberRepository.findByEmail("hong@email.com").orElseThrow(EntityNotFoundException::new);
         AddressEntity addressEntity = addressRepository.findByMemberId(member.getId()).get(0);
         Long defaultQuantity = 3L;
         CreateOrderDto createOrderDto = createDto(member, addressEntity, defaultQuantity);
@@ -245,11 +245,11 @@ class CreateOrderServiceTest {
     void calcualteTotalUsedCouponPrice(){
 
         //given
-        Member member = memberRepository.findByEmail("hong@email.com").orElseThrow(EntityNotFoundException::new);
+        MemberEntity member = memberRepository.findByEmail("hong@email.com").orElseThrow(EntityNotFoundException::new);
         AddressEntity addressEntity = addressRepository.findByMemberId(member.getId()).get(0);
         Long defaultQuantity = 3L;
         CreateOrderDto createOrderDto = createDto(member, addressEntity, defaultQuantity);
-        Long totalCouponPrice = couponRepository.findAll().stream().mapToLong(Coupon::getPrice).sum();
+        Long totalCouponPrice = couponRepository.findAll().stream().mapToLong(CouponEntity::getPrice).sum();
 
 
         //when
@@ -265,11 +265,11 @@ class CreateOrderServiceTest {
     void memberCouponUsage(){
 
         //given
-        Member member = memberRepository.findByEmail("hong@email.com").orElseThrow(EntityNotFoundException::new);
+        MemberEntity member = memberRepository.findByEmail("hong@email.com").orElseThrow(EntityNotFoundException::new);
         AddressEntity addressEntity = addressRepository.findByMemberId(member.getId()).get(0);
         Long defaultQuantity = 3L;
         CreateOrderDto createOrderDto = createDto(member, addressEntity, defaultQuantity);
-        List<MemberCoupon> memberCoupons = memberCouponRepository.findAll();
+        List<MemberCouponEntity> memberCoupons = memberCouponRepository.findAll();
 
         //when
         createOrderService.create(createOrderDto);
@@ -287,12 +287,12 @@ class CreateOrderServiceTest {
     void productStockDecrease(){
 
         //given
-        Member member = memberRepository.findByEmail("hong@email.com").orElseThrow(EntityNotFoundException::new);
+        MemberEntity member = memberRepository.findByEmail("hong@email.com").orElseThrow(EntityNotFoundException::new);
         AddressEntity addressEntity = addressRepository.findByMemberId(member.getId()).get(0);
         Long defaultQuantity = 3L;
         CreateOrderDto createOrderDto = createDto(member, addressEntity, defaultQuantity);
-        List<Product> products = productRepository.findAll();
-        List<Long> stocks = products.stream().map(Product::getStock).toList();
+        List<ProductEntity> products = productRepository.findAll();
+        List<Long> stocks = products.stream().map(ProductEntity::getStock).toList();
 
         //when
         createOrderService.create(createOrderDto);
@@ -310,7 +310,7 @@ class CreateOrderServiceTest {
     void productStockDecrease_error(){
 
         //given
-        Member member = memberRepository.findByEmail("hong@email.com").orElseThrow(EntityNotFoundException::new);
+        MemberEntity member = memberRepository.findByEmail("hong@email.com").orElseThrow(EntityNotFoundException::new);
         AddressEntity addressEntity = addressRepository.findByMemberId(member.getId()).get(0);
         Long maxQuantity = 100L;
         CreateOrderDto createOrderDto = createDto(member, addressEntity, maxQuantity);
@@ -323,10 +323,10 @@ class CreateOrderServiceTest {
 
     }
 
-    private CreateOrderDto createDto(Member member, AddressEntity addressEntity, Long lastQuantity) {
+    private CreateOrderDto createDto(MemberEntity member, AddressEntity addressEntity, Long lastQuantity) {
 
-        List<Coupon> coupons = couponRepository.findAll();
-        List<Product> products = productRepository.findAll();
+        List<CouponEntity> coupons = couponRepository.findAll();
+        List<ProductEntity> products = productRepository.findAll();
 
         ProductValue productValue1 = ProductValue.builder()
                 .productId(coupons.get(0).getProduct().getId())

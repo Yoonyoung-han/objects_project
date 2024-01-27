@@ -1,7 +1,7 @@
 package com.objects.marketbridge.product.repository;
 
 import com.objects.marketbridge.common.infra.repository.ProductJpaRepository;
-import com.objects.marketbridge.common.infra.entity.Product;
+import com.objects.marketbridge.common.infra.entity.ProductEntity;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -15,22 +15,22 @@ public class ProductRepositoryImpl implements ProductRepository {
     private final ProductJpaRepository productJpaRepository;
 
     @Override
-    public List<Product> findAll() {
+    public List<ProductEntity> findAll() {
         return productJpaRepository.findAll();
     }
 
     @Override
-    public Product findById(Long id) {
+    public ProductEntity findById(Long id) {
         return productJpaRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
-    public List<Product> findAllById(List<Long> ids) {
+    public List<ProductEntity> findAllById(List<Long> ids) {
         return productJpaRepository.findAllById(ids);
     }
 
     @Override
-    public List<Product> findByName(String name) {
+    public List<ProductEntity> findByName(String name) {
         return productJpaRepository.findByName(name);
     }
 
@@ -40,12 +40,12 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public void save(Product product) {
+    public void save(ProductEntity product) {
         productJpaRepository.save(product);
     }
 
     @Override
-    public void saveAll(List<Product> products) {
+    public void saveAll(List<ProductEntity> products) {
         productJpaRepository.saveAll(products);
     }
 }

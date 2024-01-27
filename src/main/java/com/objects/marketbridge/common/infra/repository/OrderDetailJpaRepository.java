@@ -1,7 +1,7 @@
 package com.objects.marketbridge.common.infra.repository;
 
 import com.objects.marketbridge.order.domain.OrderDetail;
-import com.objects.marketbridge.common.infra.entity.Product;
+import com.objects.marketbridge.common.infra.entity.ProductEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -23,7 +23,7 @@ public interface OrderDetailJpaRepository extends JpaRepository<OrderDetail, Lon
 
     List<OrderDetail> findByOrderNo(String orderNo);
 
-    List<OrderDetail> findByOrder_IdAndProductIn(Long orderId, List<Product> products);
+    List<OrderDetail> findByOrder_IdAndProductIn(Long orderId, List<ProductEntity> products);
 
     List<OrderDetail> findByOrderNoAndProduct_IdIn(String orderNo, List<Long> productIds);
 

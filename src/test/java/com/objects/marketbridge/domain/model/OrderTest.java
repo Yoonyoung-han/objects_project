@@ -5,9 +5,9 @@ import com.objects.marketbridge.order.domain.OrderDetail;
 import com.objects.marketbridge.order.service.port.OrderDetailRepository;
 import com.objects.marketbridge.order.service.port.OrderRepository;
 import com.objects.marketbridge.product.repository.ProductRepository;
-import com.objects.marketbridge.common.infra.entity.Coupon;
-import com.objects.marketbridge.common.infra.entity.MemberCoupon;
-import com.objects.marketbridge.common.infra.entity.Product;
+import com.objects.marketbridge.common.infra.entity.CouponEntity;
+import com.objects.marketbridge.common.infra.entity.MemberCouponEntity;
+import com.objects.marketbridge.common.infra.entity.ProductEntity;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -43,17 +43,17 @@ class OrderTest {
         Order order = Order.builder()
                 .build();
 
-        Product product1 = Product.builder()
+        ProductEntity product1 = ProductEntity.builder()
                 .build();
-        Product product2 = Product.builder()
+        ProductEntity product2 = ProductEntity.builder()
                 .build();
 
-        Coupon coupon1 = Coupon.builder()
+        CouponEntity coupon1 = CouponEntity.builder()
                 .product(product1)
                 .price(1000L)
                 .count(10L)
                 .build();
-        Coupon coupon2 = Coupon.builder()
+        CouponEntity coupon2 = CouponEntity.builder()
                 .product(product2)
                 .price(2000L)
                 .count(20L)
@@ -70,12 +70,12 @@ class OrderTest {
                 .product(product2)
                 .build();
 
-        MemberCoupon memberCoupon1 = MemberCoupon.builder()
+        MemberCouponEntity memberCoupon1 = MemberCouponEntity.builder()
                 .coupon(coupon1)
                 .isUsed(true)
                 .usedDate(useDate)
                 .build();
-        MemberCoupon memberCoupon2 = MemberCoupon.builder()
+        MemberCouponEntity memberCoupon2 = MemberCouponEntity.builder()
                 .coupon(coupon2)
                 .isUsed(true)
                 .usedDate(useDate)

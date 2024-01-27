@@ -1,9 +1,9 @@
 package com.objects.marketbridge.domain.address.repository;
 
 import com.objects.marketbridge.common.infra.entity.AddressEntity;
-import com.objects.marketbridge.member.address.repository.AddressRepository;
+import com.objects.marketbridge.member.repository.AddressRepository;
 import com.objects.marketbridge.member.repository.MemberRepository;
-import com.objects.marketbridge.common.infra.entity.Member;
+import com.objects.marketbridge.common.infra.entity.MemberEntity;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,13 +33,13 @@ class AddressEntityRepositoryImplTest {
     void findByMemberId(){
         //given
         String testEmail = "test@email.com";
-        Member member = Member.builder().email(testEmail).build();
+        MemberEntity member = MemberEntity.builder().email(testEmail).build();
         memberRepository.save(member);
         AddressEntity addressEntity = AddressEntity.builder().member(member).build();
         addressRepository.save(addressEntity);
 
         //when
-        Member findMember = memberRepository.findByEmail(testEmail).orElseThrow(IllegalArgumentException::new);
+        MemberEntity findMember = memberRepository.findByEmail(testEmail).orElseThrow(IllegalArgumentException::new);
         AddressEntity findAddressEntity = addressRepository.findByMemberId(findMember.getId()).get(0);
 
         //then

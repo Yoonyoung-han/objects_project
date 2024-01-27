@@ -1,9 +1,9 @@
 package com.objects.marketbridge.member.dto;
 
 
-import com.objects.marketbridge.common.infra.entity.Member;
-import com.objects.marketbridge.common.infra.entity.Membership;
-import com.objects.marketbridge.common.infra.entity.SocialType;
+import com.objects.marketbridge.common.infra.entity.MemberEntity;
+import com.objects.marketbridge.common.domain.enums.Membership;
+import com.objects.marketbridge.common.domain.enums.SocialType;
 import jakarta.validation.constraints.*;
 import lombok.*;
 @Getter
@@ -30,7 +30,7 @@ public class SignUpDto {
 
     private Boolean isAgree;
 
-    static public SignUpDto toDto(Member member) {
+    static public SignUpDto toDto(MemberEntity member) {
         return SignUpDto.builder()
                 .email(member.getEmail())
                 .password(member.getPassword())
@@ -40,8 +40,8 @@ public class SignUpDto {
                 .build();
     }
 
-    public Member toEntity(String encodedPassword) {
-        return Member.builder()
+    public MemberEntity toEntity(String encodedPassword) {
+        return MemberEntity.builder()
                 .email(email)
                 .name(name)
                 .password(encodedPassword)

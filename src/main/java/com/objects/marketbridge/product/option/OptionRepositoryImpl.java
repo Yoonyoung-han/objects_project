@@ -1,7 +1,7 @@
 package com.objects.marketbridge.product.option;
 
 import com.objects.marketbridge.common.infra.repository.OptionJpaRepository;
-import com.objects.marketbridge.common.infra.entity.Option;
+import com.objects.marketbridge.common.infra.entity.OptionEntity;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -13,17 +13,17 @@ public class OptionRepositoryImpl implements OptionRepository {
     private final OptionJpaRepository optionJpaRepository;
 
     @Override
-    public void save(Option option) {
+    public void save(OptionEntity option) {
         optionJpaRepository.save(option);
     }
 
     @Override
-    public Option findById(Long id) {
+    public OptionEntity findById(Long id) {
         return optionJpaRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
-    public Option findByName(String name) {
+    public OptionEntity findByName(String name) {
         return optionJpaRepository.findByName(name);
     }
 }

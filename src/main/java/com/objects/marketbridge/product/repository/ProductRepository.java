@@ -1,20 +1,20 @@
 package com.objects.marketbridge.product.repository;
 
-import com.objects.marketbridge.common.infra.entity.Product;
+import com.objects.marketbridge.common.infra.entity.ProductEntity;
 
 import java.util.List;
 
 public interface ProductRepository {
-    Product findById(Long id);
-    List<Product> findAllById(List<Long> ids);
+    ProductEntity findById(Long id);
+    List<ProductEntity> findAllById(List<Long> ids);
 
-    List<Product> findByName(String name);
+    List<ProductEntity> findByName(String name);
 
     void deleteAllInBatch();
-    void save(Product product);
+    void save(ProductEntity product);
 
-    List<Product> findAll();
+    List<ProductEntity> findAll();
 
-    void saveAll(List<Product> products);
+    void saveAll(List<ProductEntity> products);
 
 }

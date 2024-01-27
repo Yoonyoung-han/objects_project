@@ -2,7 +2,7 @@ package com.objects.marketbridge.order.domain;
 
 import com.objects.marketbridge.common.infra.entity.AddressEntity;
 import com.objects.marketbridge.common.infra.entity.BaseEntity;
-import com.objects.marketbridge.common.infra.entity.Member;
+import com.objects.marketbridge.common.infra.entity.MemberEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -26,7 +26,7 @@ public class Order extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    private Member member;
+    private MemberEntity member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")
@@ -50,7 +50,7 @@ public class Order extends BaseEntity {
     private List<OrderDetail> orderDetails = new ArrayList<>();
 
     @Builder
-    public Order(Member member, AddressEntity addressEntity, String orderName, String orderNo, Long realPrice, Long totalPrice, Long totalUsedCouponPrice, Long usedPoint, String tid) {
+    public Order(MemberEntity member, AddressEntity addressEntity, String orderName, String orderNo, Long realPrice, Long totalPrice, Long totalUsedCouponPrice, Long usedPoint, String tid) {
         this.member = member;
         this.addressEntity = addressEntity;
         this.orderName = orderName;
@@ -77,7 +77,7 @@ public class Order extends BaseEntity {
         orderDetails.forEach(OrderDetail::returnCoupon);
     }
 
-    public static Order create(Member member, AddressEntity addressEntity, String orderName, String orderNo, Long totalPrice, Long realPrice, String tid){
+    public static Order create(MemberEntity member, AddressEntity addressEntity, String orderName, String orderNo, Long totalPrice, Long realPrice, String tid){
         return Order.builder()
                 .member(member)
                 .address(addressEntity)

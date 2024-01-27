@@ -1,12 +1,12 @@
 package com.objects.marketbridge.product.option;
 
-import com.objects.marketbridge.common.infra.entity.Option;
+import com.objects.marketbridge.common.infra.entity.OptionEntity;
 
 public interface OptionRepository {
 
-    void save(Option option);
+    void save(OptionEntity option);
 
-    Option findById(Long id);
+    OptionEntity findById(Long id);
 
-    Option findByName(String name);
+    OptionEntity findByName(String name);
 }

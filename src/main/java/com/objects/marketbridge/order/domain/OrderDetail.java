@@ -1,8 +1,8 @@
 package com.objects.marketbridge.order.domain;
 
 import com.objects.marketbridge.common.infra.entity.BaseEntity;
-import com.objects.marketbridge.common.infra.entity.Coupon;
-import com.objects.marketbridge.common.infra.entity.Product;
+import com.objects.marketbridge.common.infra.entity.CouponEntity;
+import com.objects.marketbridge.common.infra.entity.ProductEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,11 +27,11 @@ public class OrderDetail extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
-    private Product product;
+    private ProductEntity product;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "coupon_id")
-    private Coupon coupon;
+    private CouponEntity coupon;
 
     private Long quantity;
 
@@ -50,7 +50,7 @@ public class OrderDetail extends BaseEntity {
     private LocalDateTime cancelledAt;
 
     @Builder
-    public OrderDetail(Order order, String orderNo, String tid, Product product, Coupon coupon,  Long quantity, Long price, String statusCode, LocalDateTime deliveredDate, String reason, LocalDateTime cancelledAt) {
+    public OrderDetail(Order order, String orderNo, String tid, ProductEntity product, CouponEntity coupon, Long quantity, Long price, String statusCode, LocalDateTime deliveredDate, String reason, LocalDateTime cancelledAt) {
         this.orderNo = orderNo;
         this.tid = tid;
         this.order = order;
@@ -72,7 +72,7 @@ public class OrderDetail extends BaseEntity {
         this.statusCode = statusCode;
     }
 
-    public static OrderDetail create(String tid, Order order, Product product, String orderNo, Coupon coupon, Long quantity, Long price, String statusCode) {
+    public static OrderDetail create(String tid, Order order, ProductEntity product, String orderNo, CouponEntity coupon, Long quantity, Long price, String statusCode) {
 
         return OrderDetail.builder()
                 .tid(tid)
@@ -99,7 +99,7 @@ public class OrderDetail extends BaseEntity {
         coupon.returnCoupon();
     }
 
-    public void setProduct(Product product) {
+    public void setProduct(ProductEntity product) {
         this.product = product;
     }
 }

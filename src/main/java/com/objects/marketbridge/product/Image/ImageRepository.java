@@ -1,10 +1,10 @@
 package com.objects.marketbridge.product.Image;
 
-import com.objects.marketbridge.common.infra.entity.Image;
+import com.objects.marketbridge.common.infra.entity.ImageEntity;
 
 public interface ImageRepository {
 
-    void save(Image image);
+    void save(ImageEntity image);
 
-    Image findById(Long id);
+    ImageEntity findById(Long id);
 }
