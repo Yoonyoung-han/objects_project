@@ -1,10 +1,10 @@
 package com.objects.marketbridge.domain.model;
 
+import com.objects.marketbridge.common.infra.entity.ProductEntity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ProductTest {
 
@@ -12,7 +12,7 @@ class ProductTest {
     @DisplayName("주어진 수량만큼 재고가 증가해야 한다.")
     public void increase() {
         // given
-        Product product = Product.builder()
+        ProductEntity product = ProductEntity.builder()
                 .stock(10L)
                 .build();
         Long quantity = 5L;

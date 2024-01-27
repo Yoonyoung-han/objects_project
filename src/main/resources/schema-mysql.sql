@@ -28,7 +28,7 @@ CREATE TABLE seller (
                         owner	varchar(255)	,
                         category	varchar(255)	,
                         detail	varchar(255)	,
-                        address	varchar(255)	,
+                        addressEntity	varchar(255)	,
                         license_no	varchar(255)	,
                         email	varchar(255)	,
                         account_no	varchar(255)	,
@@ -37,9 +37,9 @@ CREATE TABLE seller (
                         deleted_at	datetime(6)
 );
 
-DROP TABLE IF EXISTS address;
+DROP TABLE IF EXISTS addressEntity;
 
-CREATE TABLE address (
+CREATE TABLE addressEntity (
                          address_id	bigint auto_increment
                              primary key,
                          member_id	bigint	,
@@ -194,10 +194,10 @@ CREATE TABLE status_code (
                              deleted_at	datetime(6)
 );
 
-DROP TABLE IF EXISTS prod_order;
+DROP TABLE IF EXISTS orders;
 
-CREATE TABLE prod_order (
-                            prod_order_id	bigint auto_increment
+CREATE TABLE orders (
+                            order_id	bigint auto_increment
                                 primary key,
 
                             member_id	bigint	,
@@ -208,18 +208,19 @@ CREATE TABLE prod_order (
                             total_price	bigint	,
                             real_price	bigint	,
                             used_point    bigint  ,
+                            tid         varchar(255),
                             created_at	datetime(6)	,
                             updated_at	datetime(6)	,
                             deleted_at	datetime(6)
 );
 
-DROP TABLE IF EXISTS prod_order_detail;
+DROP TABLE IF EXISTS order_detail;
 
-CREATE TABLE prod_order_detail (
-                                   prod_order_detail_id	bigint auto_increment
+CREATE TABLE order_detail (
+                                   order_detail_id	bigint auto_increment
                                        primary key,
 
-                                   prod_order_id	bigint	,
+                                   order_id	bigint	,
                                    product_id	bigint	,
                                    order_no varchar(255),
                                    coupon_id	bigint	,
@@ -227,9 +228,9 @@ CREATE TABLE prod_order_detail (
                                    quantity	bigint	,
                                    price	bigint	,
                                    status_code	varchar(255)	,
+                                   tid	varchar(255)	,
                                    delivered_date	datetime(6)	,
                                    reason	text	,
-                                   payment_key varchar(255),
                                    cancelled_at	datetime(6)	,
                                    created_at	datetime(6)	,
                                    updated_at	datetime(6)	,
@@ -242,23 +243,16 @@ CREATE TABLE payment (
                          payment_id	bigint auto_increment
                              primary key,
 
-                         prod_order_id	bigint	,
+                         order_id	bigint	,
                          order_no	varchar(255)	,
-                         payment_type	varchar(255)	,
                          payment_method	varchar(255)	,
-                         payment_key	varchar(255)	,
-                         payment_status	varchar(255)	,
-                         refund_status	varchar(255)	,
-
-                         card_issuer_code	varchar(255)	,
+                         tid	varchar(255)	,
+                         card_issuer_name	varchar(255)	,
+                         card_purchase_name	varchar(255)	,
                          card_no	varchar(255)	,
-                         card_installment_plan_months	BIGINT	,
-                         card_approve_no	varchar(255)	,
-                         v_account_no	varchar(255)	,
-                         v_due_date	varchar(255)	,
-                         v_expired	bit	,
-                         v_bank	varchar(255)	,
-                         tr_bank_code	varchar(255)	,
+                         card_install_month	BIGINT	,
+                         total_amount BIGINT,
+                         discount_amount BIGINT,
                          deleted_at	datetime(6)	,
                          updated_at	datetime(6)	,
                          created_at	datetime(6)
@@ -370,7 +364,7 @@ CREATE TABLE help_desk (
 
                            member_id	bigint	,
                            product_id	bigint	,
-                           prod_order_id	bigint	,
+                           order_id	bigint	,
                            contents_type	varchar(255)	,
                            content	text	,
                            created_at	datetime(6)	,
@@ -386,7 +380,7 @@ CREATE TABLE delivery (
 
                           seller_id	bigint	,
                           address_id	bigint	,
-                          prod_order_detail_id	bigint	,
+                          order_detail_id	bigint	,
                           type	varchar(255)	,
                           carrier	varchar(255)	,
                           tracking_no	varchar(255)	,
